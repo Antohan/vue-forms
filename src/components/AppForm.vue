@@ -28,6 +28,7 @@
         <hr>
 
         <el-row :gutter="40">
+
           <el-col :span="12">
             <el-form-item label="Email" prop="email">
               <el-input v-model="form.email" />
@@ -36,10 +37,11 @@
 
           <el-col :span="12">
             <el-form-item label="Phone" prop="phone">
-              <el-input v-model="form.phone" />
+              <el-input type="tel" v-mask="'(999) 999-9999'" v-model="form.phone" />
             </el-form-item>
           </el-col>
         </el-row>
+
       </el-card>
 
       <el-form-item class="button-group">
@@ -72,6 +74,10 @@ export default {
           { required: true, message: 'Please input email address', trigger: 'blur' },
           { type: 'email', message: 'Please input correct email address', trigger: ['blur', 'change'] },
         ],
+        phone: [
+          { required: true, message: 'Please input phone', trigger: 'blur' },
+          { pattern: /\(\d{3}\) \d{3}-\d{4}/, message: 'Please input correct phone', trigger: 'blur' },
+        ],
       },
     };
   },
@@ -80,7 +86,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (!valid) {
           console.log('error submit!!');
-          return false;
+          return;
         }
         alert('submit!');
       });
